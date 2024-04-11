@@ -1,6 +1,6 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import Client from "redis-om"
+import { Client } from "redis-om"
 import { UserSchema } from "../../../schemas"
 
 export default NextAuth({
@@ -11,9 +11,9 @@ export default NextAuth({
         CredentialsProvider({
             async authorize(credentials) {
                 const client = new Client();
-                await client.open('redis://localhost:6379')
+                // await client.open('redis://localhost:6379')
                 console.log(process.env.REDIS_URL)
-                // await client.open(process.env.REDIS_URL)
+                await client.open(process.env.REDIS_URL)
                 try {
             
                     const userRepo = client.fetchRepository(UserSchema);
